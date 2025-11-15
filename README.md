@@ -27,7 +27,7 @@ This project contains a Rubber Ducky payload script designed to automate Windows
 # 3. Tools Used
 - **[Rubber Ducky](https://shop.hak5.org/products/usb-rubber-ducky)**: A keystroke injection device that emulates a USB keyboard.
 
-- **[Kali NetHunter Store]((https://store.nethunter.com/))**: A portable mobile penetration testing platform that can be used for hosting payloads and various network tunneling and exploitation tasks. (Alternaive to rubber ducky)
+- **[Kali NetHunter Store](https://store.nethunter.com/)**: A portable mobile penetration testing platform that can be used for hosting payloads and various network tunneling and exploitation tasks. (Alternaive to rubber ducky)
 
 - **[Rucky](https://store.nethunter.com/packages/com.mayank.rucky/)**: App designed to perform USB HID (Human Interface Device) attacks, similar to a USB Rubber Ducky. Install it from `Kali NetHunter store`.
 
